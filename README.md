@@ -15,11 +15,22 @@ kind create cluster
 
 # Run example
 
-Build the docker image and run it via a kubernetes job.
+- Build the docker image.
 
 ```sh
 docker build -t rossf7/rust-k8s-test:dev .
+```
+
+- Ensure the image is available for the cluster nodes. If you're
+using kind this can be done with. 
+
+```sh
 kind load docker-image rossf7/rust-k8s-test:dev
+```
+
+- Create the job and display the pod logs.
+
+```sh
 kubectl delete -f job.yaml
 kubectl apply -f job.yaml
 kubectl wait --for=condition=complete job/rust-k8s-test
